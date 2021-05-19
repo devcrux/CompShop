@@ -18,10 +18,10 @@ namespace CompShop.Common
         /// <summary>
         /// The laptop brand
         /// </summary>
-        public Brand Brand { get; set; }
+        public virtual Brand Brand { get; set; }
         /// <summary>
         /// The laptop specifications
         /// </summary>
-        public IList<Specification> Specifications {get; set;}
+        public virtual IList<Specification> Specifications {get; set;}
     }
 }
