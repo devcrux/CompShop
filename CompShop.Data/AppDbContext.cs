@@ -15,7 +15,6 @@ namespace CompShop.Data
         }
 
         public DbSet<Laptop> Laptops { get; set; }
-        public DbSet<Brand> Brands { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<Config> Configs { get; set; }
         public DbSet<Basket> ShoppingBasket { get; set; }
@@ -30,7 +29,7 @@ namespace CompShop.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Brand>()
+            builder.Entity<Laptop>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
 
@@ -38,9 +37,10 @@ namespace CompShop.Data
                 .HasIndex(x => x.Attribute)
                 .IsUnique();
 
-            builder.Entity<Basket>()
-                .HasIndex(x => x.Laptop)
-                .IsUnique();
+            //builder.Entity<Basket>()
+            //    .HasIndex(x => x.Specifications.Distinct())
+            //    .IsUnique();
+
         }
 
     }

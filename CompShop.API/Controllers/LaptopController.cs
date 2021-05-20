@@ -24,10 +24,7 @@ namespace CompShop.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Laptop>>> GetLaptops()
         {
-            return await _context.Laptops
-                                 .Include(x => x.Brand)
-                                 .Include(x => x.Specifications)
-                                 .ToListAsync();
+            return await _context.Laptops.ToListAsync();
         }
 
         [HttpPost("Add")]
@@ -39,6 +36,7 @@ namespace CompShop.API.Controllers
                 try
                 {
                     //Add the laptop object to the database context
+                    //_context.Entry(laptop.Specifications).State = EntityState.Unchanged;
                     await _context.Laptops.AddAsync(laptop);
                     var result = await _context.SaveChangesAsync();
 
@@ -47,6 +45,13 @@ namespace CompShop.API.Controllers
                         return CreatedAtAction(nameof(AddLaptop), laptop.Id);
                     else
                         return Problem("Unable to add laptop at this time");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException != null)
+                        return BadRequest(ex.InnerException.Message);
+
+                    return BadRequest("Unable to update the database " + ex.Message);
                 }
                 catch (Exception ex)
                 {

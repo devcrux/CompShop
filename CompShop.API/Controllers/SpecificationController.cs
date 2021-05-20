@@ -47,6 +47,13 @@ namespace CompShop.API.Controllers
                     else
                         return Problem("Unable to add specification at this time");
                 }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException != null)
+                        return BadRequest(ex.InnerException.Message);
+                    
+                    return BadRequest("Unable to update the database " + ex.Message);
+                }
                 catch (Exception ex)
                 {
                     return Problem(ex.Message);

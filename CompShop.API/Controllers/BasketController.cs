@@ -26,6 +26,7 @@ namespace CompShop.API.Controllers
         {
             return await _context.ShoppingBasket
                                  .Include(x => x.Laptop)
+                                 .Include(x => x.Specifications)
                                  .ToListAsync();
         }
 
@@ -37,6 +38,14 @@ namespace CompShop.API.Controllers
             {
                 try
                 {
+                    var distinctSpec = basket.Specifications
+                        .Select(m => new { m.Name })
+                        .Distinct()
+                        .ToList();
+
+                    if (distinctSpec.Count < basket.Specifications.Count)
+                        return Problem("Duplicate specifications not allowed");
+
                     //Add the basket object to the database context
                     await _context.ShoppingBasket.AddAsync(basket);
                     var result = await _context.SaveChangesAsync();

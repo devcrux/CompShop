@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CompShop.Common
 {
     /// <summary>
-    /// Represents a Laptop
+    /// Represent the brand of any given laptop
     /// </summary>
     public class Laptop
     {
@@ -16,12 +16,12 @@ namespace CompShop.Common
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
-        /// The laptop brand
+        /// The brand name of the laptop
         /// </summary>
-        public virtual Brand Brand { get; set; }
+        public string Name { get; set; }
         /// <summary>
-        /// The laptop specifications
+        /// The price associated with the brand
         /// </summary>
-        public virtual IList<Specification> Specifications {get; set;}
+        public float Price { get; set; }
     }
 }
